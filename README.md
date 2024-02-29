@@ -1,3 +1,9 @@
+
+Download models and place them in the `./g4l/core/models` folder.
+
+mistral-7b-instruct: https://gpt4all.io/models/gguf/mistral-7b-instruct-v0.1.Q4_0.gguf  
+orca-mini-3b: https://gpt4all.io/models/gguf/orca-mini-3b-gguf2-q4_0.gguf
+
 ```py
 from g4l.local import LocalEngine
 
