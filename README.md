@@ -18,3 +18,5 @@ response = engine.chat.completions.create(
 for token in response:
     print(token.choices[0].delta.content)
 ```
+
+*code currently based on llama.cpp*
