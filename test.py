@@ -2,7 +2,7 @@ from g4l.local import LocalEngine
 
 engine   = LocalEngine()
 response = engine.chat.completions.create(
-    model    = 'orca-mini-3b',
+    model    = 'mistral-7b-instruct',
     messages = [{"role": "user", "content": "hi"}],
     stream   = True
 )

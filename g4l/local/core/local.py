@@ -1,8 +1,16 @@
+# from https://github.com/nomic-ai/gpt4all/blob/main/gpt4all-bindings/python/gpt4all/gpt4all.py
+# modified version to work with g4f-local
+
 import os, sys
 
-from contextlib         import contextmanager
+from contextlib          import contextmanager
 from ...typing           import Optional, Union, Dict, List, Any
-from ._pyllmodel import LLModel, ResponseCallbackType, empty_response_callback, Iterable
+from ._pyllmodel         import (
+    LLModel, 
+    ResponseCallbackType, 
+    empty_response_callback, 
+    Iterable
+)
 
 DEFAULT_MODEL_CONFIG = {
     'systemPrompt'  : '',

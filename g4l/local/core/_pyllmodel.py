@@ -1,13 +1,12 @@
+# https://github.com/nomic-ai/gpt4all/blob/main/gpt4all-bindings/python/gpt4all/_pyllmodel.py
+# modified version to work with g4f-local
+
 from __future__ import annotations
 
 import ctypes
-import importlib.resources
 import logging
 import os
 import platform
-import re
-import subprocess
-import sys
 import threading
 from enum import Enum
 from queue import Queue
@@ -15,7 +14,6 @@ from typing import Callable, Iterable, List
 
 logger: logging.Logger = logging.getLogger(__name__)
 
-# TODO: provide a config file to make this more robust
 PLATFORM       = platform.system().lower()
 MODEL_LIB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), f'build/{PLATFORM}/')
 
@@ -142,27 +140,10 @@ RawResponseCallbackType = Callable[[int, bytes], bool]
 def empty_response_callback(token_id: int, response: str) -> bool:
     return True
 
-
-# Symbol to terminate from generator
 class Sentinel(Enum):
     TERMINATING_SYMBOL = 0
 
-
 class LLModel:
-    """
-    Base class and universal wrapper for GPT4All language models
-    built around llmodel C-API.
-
-    Parameters
-    ----------
-    model_path : str
-        Path to the model.
-    n_ctx : int
-        Maximum size of context window
-    ngl : int
-        Number of GPU layers to use (Vulkan)
-    """
-
     def __init__(self, model_path: str, n_ctx: int, ngl: int):
         self.model_path = model_path.encode()
         self.n_ctx = n_ctx
