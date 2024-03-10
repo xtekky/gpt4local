@@ -17,7 +17,7 @@ logger: logging.Logger = logging.getLogger(__name__)
 
 # TODO: provide a config file to make this more robust
 PLATFORM       = platform.system().lower()
-MODEL_LIB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), f'llama.cpp/build/{PLATFORM}/')
+MODEL_LIB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), f'build/{PLATFORM}/')
 
 def load_llmodel_library():
     ext = {"darwin": "dylib", "linux": "so", "windows": "dll"}[PLATFORM]

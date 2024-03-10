@@ -2,7 +2,7 @@ import random, string, time, re
 
 from ..typing import Union, Iterator, Messages
 from ..stubs  import ChatCompletion, ChatCompletionChunk
-from .engine  import LocalProvider
+from .core.engine  import LocalProvider
 
 IterResponse = Iterator[Union[ChatCompletion, ChatCompletionChunk]]
 

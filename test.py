@@ -1,7 +1,6 @@
 from g4l.local import LocalEngine
 
-engine = LocalEngine()
-
+engine   = LocalEngine()
 response = engine.chat.completions.create(
     model    = 'orca-mini-3b',
     messages = [{"role": "user", "content": "hi"}],
