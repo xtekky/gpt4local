@@ -14,7 +14,7 @@ class LocalProvider:
             raise ValueError(f"Model '{model}' not found.")
             
         model_path = models[model]
-        model_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../models')
+        model_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../../models/')
         full_model_path = os.path.join(model_dir, model_path)
         
         if not os.path.isfile(full_model_path):
