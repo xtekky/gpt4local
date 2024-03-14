@@ -4,3 +4,4 @@ __pycache__
 open.py
 pdf.py
 test.py
+files/storage/*
