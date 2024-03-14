@@ -118,7 +118,7 @@ engine = DocumentRetriever(
     verbose=True,
     reset_storage = True
 )
-retrieval_data = engine.retrieve('what invenstions did he do')
+retrieval_data = engine.retrieve('what inventions did he do')
 
 for node_with_score in retrieval_data:
     node = node_with_score.node
@@ -144,7 +144,7 @@ for node_with_score in retrieval_data:
 get a ready to go prompt
 
 ```py
-retrieval_data = engine.retrieve_for_llm('what invenstions did he do')
+retrieval_data = engine.retrieve_for_llm('what inventions did he do')
 print(retrieval_data)
 ```
 
