@@ -7,7 +7,7 @@ engine = LocalEngine(
 )
 
 response = engine.chat.completions.create(
-    model    = 'mistral-7b-instruct',
+    model    = 'mistral-7b-instruct-v0.2.Q4_K_S',
     messages = [{"role": "user", "content": "hey how are you today"}],
     stream   = True
 )
@@ -27,9 +27,8 @@ for token in response:
     tokens += 1
 
 elapsed = time.time() - start_time
-print(tokens)
 
-print(f'loading time = {time.time() - stream_start}s')
+print(f'loading time = {start_time - stream_start}s')
 print(f'total tokens = {tokens}')
 print(f'total time   = {elapsed}s')
 print(f'speed        = {tokens / elapsed}/s ')

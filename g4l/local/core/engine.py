@@ -1,20 +1,14 @@
 import os
 from   llama_cpp import Llama
 
-models = {
-    'mistral-7b-instruct': 'mistral-7b-instruct-v0.1.Q4_0.gguf',
-    'orca-mini-3b': 'orca-mini-3b-gguf2-q4_0.gguf',
-    'mistral-7b-instruct-v2': 'mistral-7b-instruct-v0.2.Q4_K_S.gguf'
-}
-
 class LocalProvider:
     @staticmethod
     def create_completion(model, messages, stream, **kwargs):
         # Check if the model exists
-        if model not in models:
-            raise ValueError(f"Model '{model}' not found.")
-            
-        model_path = models[model]
+        # if model not in models:
+        #     raise ValueError(f"Model '{model}' not found.")
+
+        model_path = model + '.gguf'
         model_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../../models/')
         full_model_path = os.path.join(model_dir, model_path)
         
