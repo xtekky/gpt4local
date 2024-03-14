@@ -65,8 +65,12 @@ def filter_none(**kwargs):
 class LocalEngine():
     def __init__(
         self,
+        gpu_layers: int = 0,
+        cores: int = None,
         **kwargs
     ) -> None:
+        self.gpu_layers = gpu_layers
+        self.cores = cores
         self.chat: Chat = Chat(self)
         
 class Completions():
@@ -83,13 +87,14 @@ class Completions():
         stop: Union[list[str], str] = None,
         **kwargs
     ) -> Union[ChatCompletion, Iterator[ChatCompletionChunk]]:
-
         stop = [stop] if isinstance(stop, str) else stop
         response = LocalProvider.create_completion(
-            model, messages, stream,            
+            model, messages, stream,
             **filter_none(
                 max_tokens=max_tokens,
                 stop=stop,
+                n_gpu_layers=self.client.gpu_layers,
+                threads=self.client.cores,
             ),
             **kwargs
         )
@@ -101,4 +106,3 @@ class Chat():
 
     def __init__(self, client: LocalEngine):
         self.completions = Completions(client)
-    

@@ -1,3 +1,5 @@
 *.gguf
 __pycache__
 *.DS_Store
+open.py
+pdf.py

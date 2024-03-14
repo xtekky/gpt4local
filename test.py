@@ -1,13 +1,35 @@
 from g4l.local import LocalEngine
+import time
 
-engine   = LocalEngine()
+engine = LocalEngine(
+    gpu_layers = -1,  # use all GPU layers
+    cores      = 0    # use all CPU cores
+)
+
 response = engine.chat.completions.create(
     model    = 'mistral-7b-instruct',
-    messages = [{"role": "user", "content": "hi"}],
+    messages = [{"role": "user", "content": "hey how are you today"}],
     stream   = True
 )
 
-for token in response:
-    print(token.choices[0].delta.content)
+start        = False
+stream_start = time.time()
+start_time   = 0
+tokens       = 0
 
-#print(response.choices[0].message.content)
+for token in response:
+    if start != True:
+        start_time = time.time()
+    
+    start = True
+    
+    print(token.choices[0].delta.content or "")
+    tokens += 1
+
+elapsed = time.time() - start_time
+print(tokens)
+
+print(f'loading time = {time.time() - stream_start}s')
+print(f'total tokens = {tokens}')
+print(f'total time   = {elapsed}s')
+print(f'speed        = {tokens / elapsed}/s ')

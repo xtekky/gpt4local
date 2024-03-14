@@ -7,7 +7,10 @@ orca-mini-3b: https://gpt4all.io/models/gguf/orca-mini-3b-gguf2-q4_0.gguf
 ```py
 from g4l.local import LocalEngine
 
-engine = LocalEngine()
+engine = LocalEngine(
+    gpu_layers = -1,  # use all GPU layers
+    cores      = 0    # use all CPU cores
+)
 
 response = engine.chat.completions.create(
     model    = 'orca-mini-3b',

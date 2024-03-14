@@ -1,9 +1,10 @@
 import os
-from .local import Engine
+from   llama_cpp import Llama
 
 models = {
     'mistral-7b-instruct': 'mistral-7b-instruct-v0.1.Q4_0.gguf',
-    'orca-mini-3b': 'orca-mini-3b-gguf2-q4_0.gguf'
+    'orca-mini-3b': 'orca-mini-3b-gguf2-q4_0.gguf',
+    'mistral-7b-instruct-v2': 'mistral-7b-instruct-v0.2.Q4_K_S.gguf'
 }
 
 class LocalProvider:
@@ -20,21 +21,23 @@ class LocalProvider:
         if not os.path.isfile(full_model_path):
             raise FileNotFoundError(f"Model file '{full_model_path}' not found.")
         
-        model = Engine(model_path,
-                               n_threads=8,
-                               verbose=True,
-                               model_path=model_dir)
-        
-        system_template = next((message['content'] for message in messages if message['role'] == 'system'), 
-                               'A chat between a curious user and an artificial intelligence assistant.')
-        
-        prompt_template = 'USER: {0}\nASSISTANT: '
-        
-        conversation = '\n'.join(f"{msg['role'].upper()}: {msg['content']}" for msg in messages) + "\nASSISTANT: "
-        
-        with model.chat_session(system_template, prompt_template):
-            if stream:
-                for token in model.generate(conversation, streaming=True):
-                    yield token
-            else:
-                yield model.generate(conversation)
+        engine = Llama(
+            model_path  =   full_model_path,
+            chat_format =   "mistral-instruct",
+            verbose     =   False,
+            n_gpu_layers=   kwargs.get('n_gpu_layers', 0),     # Offload all layers to GPU
+            n_threads   =   kwargs.get('threads', None),      # Use all available CPU threads
+            use_mmap    =   True,   # Use mmap for faster model loading
+            # use_mlock=True,       # Lock the model in memory to prevent swapping
+            offload_kqv =   True,   # Offload K, Q, V to GPU
+        )
+
+        completion = engine.create_chat_completion(
+                messages    = messages,
+                stream      = True,
+                temperature = kwargs.get('temperature', 0.8),
+                max_tokens  = kwargs.get('max_tokens', 4900),
+        )
+
+        for token in completion :
+            yield (token['choices'][0]['delta'].get('content'))
