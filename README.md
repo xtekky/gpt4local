@@ -34,4 +34,23 @@ for token in response:
     print(token.choices[0].delta.content)
 ```
 
+### Best Models ?
+according to https://chat.lmsys.org/ 
+
+- Best **`7b`** model is `Mistral-7B-Instruct-v0.2`
+- Best opensource  model is `Qwen1.5-72B-Chat` | available [here](https://huggingface.co/Qwen/Qwen1.5-72B-Chat-GGUF/tree/main)
+
+### Benchmark
+
+```
+pc: mac air m2
+cpu/gpu: m2 chip
+cores: all (8)
+gpu layers: all
+gpu offload: 100%
+
+
+```
+
+
 *code currently based on `llama.cpp`*
