@@ -1,12 +1,12 @@
 from g4l.local import DocumentRetriever
 
-pdf            = DocumentRetriever(
+engine = DocumentRetriever(
     files=['einstein-albert.txt'], 
     embed_model='SmartComponents/bge-micro-v2', # https://huggingface.co/spaces/mteb/leaderboard
     verbose=True,
     #reset_storage = True,
 )
-retrieval_data = pdf.retrieve('what invenstions did he do')
+retrieval_data = engine.retrieve('what inventions did he do')
 
 for node_with_score in retrieval_data:
     node = node_with_score.node
@@ -30,5 +30,5 @@ for node_with_score in retrieval_data:
     
 print("---------------------------------")
 
-retrieval_data = pdf.retrieve_for_llm('what invenstions did he do')
+retrieval_data = engine.retrieve_for_llm('what invenstions did he do')
 print(retrieval_data)
