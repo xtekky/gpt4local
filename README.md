@@ -90,12 +90,21 @@ Cores: All (8)
 GPU Layers: All
 GPU Offload: 100%
 
+no power:
 Model: mistral-7b-instruct-v2
 Number of iterations: 5
 Average loading time: 1.85s
 Average total tokens: 48.20
 Average total time: 5.34s
 Average speed: 9.02 t/s
+
+with power:
+Model: mistral-7b-instruct-v2
+Number of iterations: 5
+Average loading time: 1.88s
+Average total tokens: 317
+Average total time: 17.7s
+Average speed: 17.9 t/s
 ```
 
 ## Why gpt4local ?
