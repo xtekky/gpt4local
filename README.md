@@ -9,10 +9,11 @@ pip3 install -U llama-cpp-python
 Download models and place them in the [`./models`](/models) folder.
 
 You can find a majority of the models on HuggingFace, look for `GGUF`, models, which is the required format.
+
 https://huggingface.co/TheBloke has a lot of quantized `.gguf` models available.
 
-mistral-7b-instruct (v2): https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF   
-orca-mini-3b: https://gpt4all.io/models/gguf/orca-mini-3b-gguf2-q4_0.gguf
+- mistral-7b-instruct (v2): https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF   
+- orca-mini-3b: https://gpt4all.io/models/gguf/orca-mini-3b-gguf2-q4_0.gguf
 
 What is `q2_0`, `q4_0`, `q5_0`, `q8_0` ?
 - Higher quantization 'bit counts' (4 bits or more) generally preserve more quality, whereas lower levels compress the model further, which can lead to a significant loss in quality.
