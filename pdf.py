@@ -2,8 +2,9 @@ from g4l.local import DocumentRetriever
 
 pdf            = DocumentRetriever(
     files=['einstein-albert.txt'], 
-    embed_model='sentence-transformers/paraphrase-MiniLM-L6-v2', #https://huggingface.co/spaces/mteb/leaderboard
-    verbose=True
+    embed_model='SmartComponents/bge-micro-v2', # https://huggingface.co/spaces/mteb/leaderboard
+    verbose=True,
+    reset_storage = True
 )
 retrieval_data = pdf.retrieve('what invenstions did he do')
 

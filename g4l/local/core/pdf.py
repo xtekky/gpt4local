@@ -1,4 +1,4 @@
-import os
+import shutil
 import pathlib
 import time
 from hashlib import md5
@@ -28,10 +28,13 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class DocumentRetriever:
-    def __init__(self, files: List[str] = [], verbose: bool = False, mode: str = "default", embed_model: str = None) -> None:
+    def __init__(self, files: List[str] = [], verbose: bool = False, mode: str = "default", embed_model: str = None, reset_storage: bool = False) -> None:
         self.similarity_index = modes[mode]
         self.verbose = verbose
         self.init_time = time.time()
+        
+        if reset_storage:
+            shutil.rmtree(BASE_ADDR / f"files/storage/")
 
         if embed_model:
             Settings.embed_model = HuggingFaceEmbedding(model_name=embed_model)

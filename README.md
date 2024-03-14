@@ -107,6 +107,40 @@ Average total time: 17.7s
 Average speed: 17.9 t/s
 ```
 
+## Document Retrieval
+
+```py
+from g4l.local import DocumentRetriever
+
+pdf            = DocumentRetriever(
+    files=['einstein-albert.txt'], 
+    embed_model='SmartComponents/bge-micro-v2', # https://huggingface.co/spaces/mteb/leaderboard
+    verbose=True,
+    reset_storage = True
+)
+retrieval_data = pdf.retrieve('what invenstions did he do')
+
+for node_with_score in retrieval_data:
+    node = node_with_score.node
+    score = node_with_score.score
+
+    # Access the text content
+    text = node.text
+
+    # Access the metadata
+    metadata = node.metadata
+    page_label = metadata['page_label']
+    file_name = metadata['file_name']
+    # ... access other metadata fields as needed
+
+    # Print or process the extracted information
+    print(f"Text: {text}")
+    print(f"Score: {score}")
+    print(f"Page Label: {page_label}")
+    print(f"File Name: {file_name}")
+    print("---")
+```
+
 ## Why gpt4local ?
 - I have coded g4l in a way that you can use language model in a very familiar way with quick installation, while preserving maximum performance.
 - Using the direct python bindings, i was able to **max out** the performance by using 100% gpu, cpu and ram.
