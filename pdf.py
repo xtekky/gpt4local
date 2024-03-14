@@ -4,7 +4,7 @@ pdf            = DocumentRetriever(
     files=['einstein-albert.txt'], 
     embed_model='SmartComponents/bge-micro-v2', # https://huggingface.co/spaces/mteb/leaderboard
     verbose=True,
-    reset_storage = True
+    #reset_storage = True,
 )
 retrieval_data = pdf.retrieve('what invenstions did he do')
 
@@ -27,3 +27,8 @@ for node_with_score in retrieval_data:
     print(f"Page Label: {page_label}")
     print(f"File Name: {file_name}")
     print("---")
+    
+print("---------------------------------")
+
+retrieval_data = pdf.retrieve_for_llm('what invenstions did he do')
+print(retrieval_data)

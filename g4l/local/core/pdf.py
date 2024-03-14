@@ -33,9 +33,6 @@ class DocumentRetriever:
         self.verbose = verbose
         self.init_time = time.time()
         
-        if reset_storage:
-            shutil.rmtree(BASE_ADDR / f"files/storage/")
-
         if embed_model:
             Settings.embed_model = HuggingFaceEmbedding(model_name=embed_model)
 
@@ -95,5 +92,34 @@ class DocumentRetriever:
             logger.info(f"Total time: {total_time:.4f}s")
 
         return response
+    
+    def retrieve_for_llm(self, query_str: str):
+        retrieval_data   =  self.retrieve(query_str)
+        context_batches  = ''
+        
+        for node_with_score in retrieval_data:
+            node = node_with_score.node
+            score = node_with_score.score
+
+            text = node.text
+
+            metadata = node.metadata
+            page_label = metadata['page_label']
+            file_name = metadata['file_name']
+
+            batch = '\n'.join([f'content: \n{text}', f'----\npage_label: {page_label}', f'file name: {file_name}', f'similarity score: {score}'])
+            context_batches += (batch + '\n---')
+        
+        prompt = (f'Context information is below.\n'
+            + '---------------------\n'
+            + f'{context_batches}\n'
+            + '---------------------\n'
+            + 'Given the context information and not prior knowledge, answer the query.\n'
+            + f'Query: {query_str}\n'
+            + 'Answer: ')
+        
+        return prompt
+
+
     
 __all__ = ['DocumentRetriever']
