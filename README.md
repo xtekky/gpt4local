@@ -1,30 +1,64 @@
-### Requirements
-g4l needs llama.cpp python bindings, which you can install with pip:
+# gpt4local
+
+G4L is a high level Python library that allows you to run language models using the `llama.cpp bindings`. It is a sister project to @gpt4free, which also provides AI, but using internet and external providers.
+
+## Table of Contents
+
+1. [Requirements](#requirements)
+2. [Installation](#installation)
+3. [Downloading Models](#downloading-models)
+   - [Model Quantization](#model-quantization)
+   - [Best Models](#best-models)
+4. [Usage](#usage)
+5. [Benchmark](#benchmark)
+
+## Requirements
+
+To use G4L, you need to have the llama.cpp Python bindings installed. You can install them using pip:
 
 ```
 pip3 install -U llama-cpp-python
 ```
 
-### Download models
-Download models and place them in the [`./models`](/models) folder.
+## Installation
 
-You can find a majority of the models on HuggingFace, look for `GGUF`, models, which is the required format.
+1. Clone the G4L repository:
 
-https://huggingface.co/TheBloke has a lot of quantized `.gguf` models available.
+```
+git clone https://github.com/gpt4free/gpt4local
+```
 
-- mistral-7b-instruct (v2): https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF   
-- orca-mini-3b: https://gpt4all.io/models/gguf/orca-mini-3b-gguf2-q4_0.gguf
+2. Navigate to the cloned directory:
 
-What is `q2_0`, `q4_0`, `q5_0`, `q8_0` ?
-- Higher quantization 'bit counts' (4 bits or more) generally preserve more quality, whereas lower levels compress the model further, which can lead to a significant loss in quality.
-- generally the standard quantization level is `q4_0`.
+```
+cd gpt4local
+```
 
-Download .gguf files
-- 7b parameters ~ `8gb` of ram
-- 13b parameters ~ `16gb` of ram
+## Downloading Models
 
-the `model` parameter must match the file name of the `.gguf` model you just placed in `./models`, without the `.gguf` extension !
+1. Download the desired models in the `GGUF` format from [HuggingFace](https://huggingface.co/). You can find a variety of quantized `.gguf` models on [TheBloke's page](https://huggingface.co/TheBloke).
 
+2. Place the downloaded models in the [`./models`](/models) folder.
+
+Some popular models include:
+- [mistral-7b-instruct (v2)](https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF)
+- [orca-mini-3b](https://gpt4all.io/models/gguf/orca-mini-3b-gguf2-q4_0.gguf)
+
+### Model Quantization
+
+The models are available in different quantization levels, such as `q2_0`, `q4_0`, `q5_0`, and `q8_0`. Higher quantization 'bit counts' (4 bits or more) generally preserve more quality, whereas lower levels compress the model further, which can lead to a significant loss in quality. The standard quantization level is `q4_0`.
+
+Keep in mind the memory requirements for different model sizes:
+- 7b parameters ~ `8gb` of RAM
+- 13b parameters ~ `16gb` of RAM
+
+### Best Models
+
+According to [chat.lmsys.org](https://chat.lmsys.org/), the best models are:
+- Best **`7b`** model: `Mistral-7B-Instruct-v0.2`
+- Best opensource model: `Qwen1.5-72B-Chat` ([available here](https://huggingface.co/Qwen/Qwen1.5-72B-Chat-GGUF/tree/main))
+
+## Usage
 
 ```py
 from g4l.local import LocalEngine
@@ -44,28 +78,27 @@ for token in response:
     print(token.choices[0].delta.content)
 ```
 
-### Best Models ?
-according to https://chat.lmsys.org/ 
+Note: The `model` parameter must match the file name of the `.gguf` model you placed in `./models`, without the `.gguf` extension!
 
-- Best **`7b`** model is `Mistral-7B-Instruct-v0.2`
-- Best opensource  model is `Qwen1.5-72B-Chat` | available [here](https://huggingface.co/Qwen/Qwen1.5-72B-Chat-GGUF/tree/main)
-
-### Benchmark
+## Benchmark
+benchmark ran on a 2022 mac book air m2, 8gb ram.
 
 ```
-pc: mac air m2
-cpu/gpu: m2 chip
-cores: all (8)
-gpu layers: all
-gpu offload: 100%
+PC: Mac Air M2
+CPU/GPU: M2 chip
+Cores: All (8)
+GPU Layers: All
+GPU Offload: 100%
 
-Model                = mistral-7b-instruct
-Number of iterations = 5
-Average loading time = 1.85s
-Average total tokens = 48.20
-Average total time   = 5.34s
-Average speed        = 9.02 t/s
+Model: mistral-7b-instruct-v2
+Number of iterations: 5
+Average loading time: 1.85s
+Average total tokens: 48.20
+Average total time: 5.34s
+Average speed: 9.02 t/s
 ```
 
-
-*code currently based on `llama.cpp`*
+## Why gpt4local ?
+- I have coded g4l in a way that you can use language model in a very familiar way with quick installation, while preserving maximum performance.
+- Using the direct python bindings, i was able to **max out** the performance by using 100% gpu, cpu and ram.
+- I tried different 3d party pacakges that wrap `llama.cpp`, like LmStudio, which still had a great performance but in my case a speed of ~`7.83` tokens/s in contrast to `9.02` t/s in with native llama.cpp python bindings.
