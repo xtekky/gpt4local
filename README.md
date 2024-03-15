@@ -12,6 +12,7 @@ G4L is a high-level Python library that allows you to run language models using 
    - [Best Models](#best-models)
 4. [Usage](#usage)
    - [Basic Usage](#basic-usage)
+   - [Chat With Documents](#chat-with-documents)
    - [Document Retrieval](#document-retrieval)
    - [Advanced Usage](#advanced-usage)
 5. [Benchmark](#benchmark)
@@ -80,6 +81,36 @@ for token in response:
 
 Note: The `model` parameter must match the file name of the `.gguf` model you placed in `./models`, without the `.gguf` extension!
 
+### Chat With Documents
+
+```py
+from g4l.local import LocalEngine, DocumentRetriever
+
+engine = LocalEngine(
+    gpu_layers = -1,  # use all GPU layers
+    cores      = 0,   # use all CPU cores
+    document_retriever = DocumentRetriever(
+        files       = ['einstein-albert.pdf'], 
+        embed_model = 'SmartComponents/bge-micro-v2', # https://huggingface.co/spaces/mteb/leaderboard
+    )
+)
+
+response = engine.chat.completions.create(
+    model    = 'mistral-7b-instruct',
+    messages = [
+        {
+            "role": "user", "content": "how was einstein's work in the laboratory"
+        }
+    ],
+    stream   = True
+)
+
+for token in response:
+    print(token.choices[0].delta.content or "", end="", flush=True)
+```
+
+! The embeddings model will be downloaded upon first use, but it is really small and lightweight.
+
 ### Document Retrieval
 G4L provides a `DocumentRetriever` class that allows you to retrieve relevant information from documents based on a query. Here's an example of how to use it:
 
@@ -90,7 +121,6 @@ engine = DocumentRetriever(
     files=['einstein-albert.txt'], 
     embed_model='SmartComponents/bge-micro-v2', # https://huggingface.co/spaces/mteb/leaderboard
     verbose=True,
-    reset_storage=True
 )
 
 retrieval_data = engine.retrieve('what inventions did he do')
