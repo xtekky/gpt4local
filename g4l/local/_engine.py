@@ -1,12 +1,13 @@
 import os
-from   llama_cpp import Llama
-from .pdf        import DocumentRetriever
+
+from llama_cpp import Llama
+from ._docs    import DocumentRetriever
 
 class LocalProvider:
     @staticmethod
     def create_completion(model, messages, document_retriever: DocumentRetriever = None, **kwargs):
         model_path      = model + '.gguf'
-        model_dir       = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../../models/')
+        model_dir       = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../models/')
         full_model_path = os.path.join(model_dir, model_path)
         
         if not os.path.isfile(full_model_path):
@@ -39,3 +40,5 @@ class LocalProvider:
             val = token['choices'][0]['delta'].get('content')
             if val:
                 yield val
+                
+__all__ = ['LocalProvider']

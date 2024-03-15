@@ -2,8 +2,8 @@ import random, string, time, re
 
 from ..typing import Union, Iterator, Messages
 from ..stubs  import ChatCompletion, ChatCompletionChunk
-from .core.engine  import LocalProvider
-from .core.pdf     import DocumentRetriever
+from ._engine import LocalProvider
+from ._docs   import DocumentRetriever
 
 IterResponse = Iterator[Union[ChatCompletion, ChatCompletionChunk]]
 
@@ -18,8 +18,7 @@ def iter_response(
     stream: bool,
     response_format: dict = None,
     max_tokens: int = None,
-    stop: list = None
-) -> IterResponse:
+    stop: list = None) -> IterResponse:
     
     content = ""
     finish_reason = None

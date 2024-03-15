@@ -16,8 +16,8 @@ from llama_index.core import (
 )
 
 Settings.chunk_size = 1024
-current_file_path = pathlib.Path(__file__).parent.resolve()
-BASE_ADDR = current_file_path / "../../.."
+current_file_path   = pathlib.Path(__file__).parent.resolve()
+BASE_ADDR           = current_file_path / "../.."
 modes = {
     "subtle": 1,
     "default": 2,
@@ -123,6 +123,4 @@ class DocumentRetriever:
         
         return prompt
 
-
-    
 __all__ = ['DocumentRetriever']
