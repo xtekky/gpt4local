@@ -1,5 +1,3 @@
-# G4L - GPT4Local
-
 <img width="1148" alt="image" src="https://github.com/gpt4free/gpt4local/assets/98614666/df91ae5f-fa4a-4eb3-9dca-f9d38aa3764b">
 
 G4L is a high-level Python library that allows you to run language models using the `llama.cpp` bindings. It is a sister project to @gpt4free, which also provides AI, but using internet and external providers.
