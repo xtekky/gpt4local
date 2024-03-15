@@ -1,9 +1,12 @@
-import shutil
-import pathlib
 import time
+import pathlib
+import logging
+
 from hashlib import md5
-from typing import List
+from typing  import List
+
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
+from llama_index.core.node_parser import SentenceSplitter
 from llama_index.core import (
     VectorStoreIndex,
     SimpleDirectoryReader,
@@ -11,8 +14,6 @@ from llama_index.core import (
     load_index_from_storage,
     Settings
 )
-from llama_index.core.node_parser import SentenceSplitter
-import logging
 
 Settings.chunk_size = 1024
 current_file_path = pathlib.Path(__file__).parent.resolve()
@@ -24,7 +25,7 @@ modes = {
     "very-aggressive": 10
 }
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.CRITICAL)
 logger = logging.getLogger(__name__)
 
 class DocumentRetriever:
@@ -35,8 +36,10 @@ class DocumentRetriever:
         
         if embed_model:
             Settings.embed_model = HuggingFaceEmbedding(model_name=embed_model)
-
-        storage_id = md5(":".join(files).encode()).hexdigest()
+        
+        storage_id_token = f'!{embed_model}!' if embed_model else "!notset!"
+        
+        storage_id       = md5(":".join(files + [storage_id_token]).encode()).hexdigest()
         self.persist_dir = BASE_ADDR / f"files/storage/storage.{storage_id}"
 
         if not self.persist_dir.exists():

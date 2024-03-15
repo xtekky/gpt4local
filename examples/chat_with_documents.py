@@ -6,6 +6,7 @@ engine = DocumentRetriever(
     verbose=True,
     #reset_storage = True,
 )
+
 retrieval_data = engine.retrieve('what inventions did he do')
 
 for node_with_score in retrieval_data:

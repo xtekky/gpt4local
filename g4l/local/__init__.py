@@ -68,10 +68,19 @@ class LocalEngine():
         self,
         gpu_layers: int = 0,
         cores: int = None,
-        **kwargs
-    ) -> None:
+        use_mmap: bool = True,
+        use_mlock: bool = False,
+        offload_kqv: bool = True,
+        context_window: int = 4900, 
+        document_retriever: DocumentRetriever = None, **kwargs) -> None:
+        
         self.gpu_layers = gpu_layers
         self.cores = cores
+        self.use_mmap = use_mmap
+        self.use_mlock = use_mlock
+        self.offload_kqv = offload_kqv
+        self.context_window = context_window
+        self.document_retriever: DocumentRetriever = document_retriever
         self.chat: Chat = Chat(self)
         
 class Completions():
@@ -90,12 +99,16 @@ class Completions():
     ) -> Union[ChatCompletion, Iterator[ChatCompletionChunk]]:
         stop = [stop] if isinstance(stop, str) else stop
         response = LocalProvider.create_completion(
-            model, messages, stream,
+            model, messages, self.client.document_retriever,
             **filter_none(
                 max_tokens=max_tokens,
                 stop=stop,
                 n_gpu_layers=self.client.gpu_layers,
                 threads=self.client.cores,
+                use_mmap=self.client.use_mmap,
+                use_mlock=self.client.use_mlock,
+                offload_kqv=self.client.offload_kqv,
+                n_ctx=self.client.context_window
             ),
             **kwargs
         )
