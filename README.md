@@ -2,6 +2,8 @@
 
 G4L is a high-level Python library that allows you to run language models using the `llama.cpp` bindings. It is a sister project to @gpt4free, which also provides AI, but using internet and external providers.
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/gist/xtekky/135059d05dde20657af73e2c2f6fcbaa/untitled2.ipynb)
+
 ## Table of Contents
 1. [Requirements](#requirements)
 2. [Installation](#installation)
