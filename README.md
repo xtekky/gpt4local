@@ -1,8 +1,24 @@
 <img width="1148" alt="image" src="https://github.com/gpt4free/gpt4local/assets/98614666/df91ae5f-fa4a-4eb3-9dca-f9d38aa3764b">
 
-G4L is a high-level Python library that allows you to run language models using the `llama.cpp` bindings. It is a sister project to @gpt4free, which also provides AI, but using internet and external providers.
+`g4l` is a high-level Python library that allows you to run language models using the `llama.cpp` bindings. It is a sister project to @gpt4free, which also provides AI, but using internet and external providers, aswell as additional feature such as text retrieval from documents.
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/gist/xtekky/135059d05dde20657af73e2c2f6fcbaa/untitled2.ipynb)
+pull requests are welcome !!
+
+#### Roadmap
+
+- [ ] Gui / playground
+- [ ] Support function calling & image models
+- [ ] tts / stt models
+- [ ] Blog article creator (use of multiple queries to produce a qualitative blog atricle with efficient style prompting and context retrieval)
+- [ ] Allow for passing of more arguments
+- [ ] Improve compatibility / Unittests.
+- [ ] Native binding implementation / more low level usage of `llama-cpp-python`
+- [ ] Ability to finetune models on datasets / dataset generator
+- [ ] Optimise for devices with low memory and computing (current min ram is 8gb & gpu is preferred)
+- [ ] Blog articles explaining usage, and how llm's work.
+- [ ] Better model list / optimised parameters
+- [ ] Create custom local benchmarking.
+
 
 ## Table of Contents
 1. [Requirements](#requirements)
